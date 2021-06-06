@@ -32,15 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private ConvidadoRepository repo;	
+	private ConvidadoRepository convidadoRepository;	
 
-	private static final String[] PUBLIC_MATCHERS = { "/categorias/**", "/pessoas_fisicas/**",
-			"/pessoas_juridicas/**" };
+	private static final String[] PUBLIC_MATCHERS = { "/Evento/**", "/Convidado/**" };
 
-	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/pessoas_fisicas/**",
-			"/pessoas_juridicas/**"
-			};
+	private static final String[] PUBLIC_MATCHERS_POST = { "/Evento/**" };
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -51,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 			.anyRequest().authenticated();
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, repo));
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, convidadoRepository));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 	}
 	
