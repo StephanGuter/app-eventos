@@ -6,4 +6,6 @@ import com.api.eventos.model.Convidado;
 
 public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 	Convidado findByLogin(String login);
+	
+	Convidado findByCpf(String cpf);
 }

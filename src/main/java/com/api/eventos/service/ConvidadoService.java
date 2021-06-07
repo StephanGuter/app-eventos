@@ -59,6 +59,7 @@ public class ConvidadoService implements ServiceInterface<Convidado>{
 	@Override
 	public boolean update(Convidado obj) {
 		if (repository.existsById(obj.getId())) {
+			obj.setSenha(passwordEncoder.encode(obj.getSenha()));
 			repository.save(obj);
 			return true;
 		}
