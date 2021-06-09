@@ -88,6 +88,7 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Grava um convidado")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<Convidado> post(@Valid @RequestBody Convidado obj) {
 		service.create(obj);
@@ -108,6 +109,7 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Atualiza um convidado, dado seu id")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<?> put(@Valid @RequestBody Convidado obj) {
 		if (service.update(obj)) {
@@ -130,8 +132,8 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Deleta um convidado, dado seu id")
-	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (service.delete(id)) {
 			return ResponseEntity.ok().build();

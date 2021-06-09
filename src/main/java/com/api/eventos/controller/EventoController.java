@@ -82,6 +82,7 @@ public class EventoController implements ControllerInterface<Evento>{
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Grava um evento")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<Evento> post(@Valid @RequestBody Evento obj) {
 		service.create(obj);
@@ -102,6 +103,7 @@ public class EventoController implements ControllerInterface<Evento>{
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Atualiza um evento, dado seu id")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<?> put(@Valid @RequestBody Evento obj) {
 		if (service.update(obj)) {
@@ -124,8 +126,8 @@ public class EventoController implements ControllerInterface<Evento>{
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Deleta um evento, dado seu id")
-	@DeleteMapping(value="/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@DeleteMapping(value="/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (service.delete(id)) {
 			return ResponseEntity.ok().build();
