@@ -35,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private ConvidadoRepository convidadoRepository;	
 
 	private static final String[] PUBLIC_MATCHERS = { "/evento/**", "/convidado/**" };
-
-	private static final String[] PUBLIC_MATCHERS_POST = { "/evento/**", "/convidado/**" };
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -44,7 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()				      
-			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS).permitAll()
+			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS).permitAll()
+			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS).permitAll()
 			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
 			.permitAll()
 			.anyRequest()

@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,10 +39,11 @@ public class Evento extends AbstractEntity {
 	@Column(name = "ds_evento", length = 255)
 	private String descricao;
 	
+	@NotNull
+	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@Column(name = "dt_evento")
-	@Future
 	private Calendar data;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
