@@ -1,5 +1,7 @@
 package com.api.eventos.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum TipoPerfil {
 	ADMIN(1, "ROLE_ADMIN"), CONVIDADO(2, "ROLE_CONVIDADO");
 
@@ -11,6 +13,7 @@ public enum TipoPerfil {
 		this.descricao = descricao;
 	}
 
+	@JsonValue
 	public Integer getCod() {
 		return cod;
 	}
