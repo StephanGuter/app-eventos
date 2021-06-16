@@ -9,10 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.api.eventos.exception.AuthorizationException;
 import com.api.eventos.model.Convidado;
 import com.api.eventos.repository.ConvidadoRepository;
-import com.api.eventos.security.JWTUtil;
 import com.api.eventos.security.UserDetailsImpl;
 
 @Service
@@ -23,9 +21,6 @@ public class ConvidadoService implements ServiceInterface<Convidado>{
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private JWTUtil jwtUtil;
 	
 	public static UserDetailsImpl authenticated() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,9 +39,6 @@ public class ConvidadoService implements ServiceInterface<Convidado>{
 
 	@Override
 	public Convidado findById(Long id) {
-		if (!jwtUtil.authorized(id)) {
-			throw new AuthorizationException("Acesso negado!");
-		}
 		Optional<Convidado> _convidado = repository.findById(id);
 		return _convidado.orElse(null);
 	}

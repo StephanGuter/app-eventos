@@ -45,7 +45,7 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Retorna uma lista com todos os convidados")
-	@GetMapping
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Convidado>> getAll() {
 		return ResponseEntity.ok(service.findAll());
 	}
@@ -65,7 +65,7 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			})
 	@Operation(summary = "Retorna um convidado, dado seu id")
 	@GetMapping(value="/{id}", produces = "application/json")
-	public ResponseEntity<?> get(@PathVariable("id") Long id) {
+	public ResponseEntity<Convidado> get(@PathVariable("id") Long id) {
 		try {
 			Convidado _convidado = service.findById(id);
 			if (_convidado != null)
@@ -111,7 +111,7 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 	@Operation(summary = "Atualiza um convidado, dado seu id")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<?> put(@Valid @RequestBody Convidado obj) {
+	public ResponseEntity<Convidado> put(@Valid @RequestBody Convidado obj) {
 		if (service.update(obj)) {
 			return ResponseEntity.ok(obj);
 		}

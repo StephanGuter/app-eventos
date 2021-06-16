@@ -63,7 +63,7 @@ public class EventoController implements ControllerInterface<Evento>{
 			})
 	@Operation(summary = "Retorna um evento, dado seu id")
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<?> get(@PathVariable("id") Long id) {
+	public ResponseEntity<Evento> get(@PathVariable("id") Long id) {
 		Evento _evento = service.findById(id);
 		if (_evento != null)
 			return ResponseEntity.ok(_evento);
@@ -105,7 +105,7 @@ public class EventoController implements ControllerInterface<Evento>{
 	@Operation(summary = "Atualiza um evento, dado seu id")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<?> put(@Valid @RequestBody Evento obj) {
+	public ResponseEntity<Evento> put(@Valid @RequestBody Evento obj) {
 		if (service.update(obj)) {
 			return ResponseEntity.ok(obj);
 		}

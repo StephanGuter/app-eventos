@@ -14,16 +14,20 @@ import com.api.eventos.security.UserDetailsImpl;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private ConvidadoRepository repo;
+	private ConvidadoRepository repository;
 	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Convidado _convidado = repo.findByLogin(username);
+		Convidado _convidado = repository.findByLogin(username);
 		if (_convidado == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		return new UserDetailsImpl(_convidado.getId(), _convidado.getLogin(), 
-				_convidado.getSenha(), _convidado.getPerfis());
+		return new UserDetailsImpl(
+			_convidado.getId(),
+			_convidado.getLogin(),
+			_convidado.getSenha(),
+			_convidado.getPerfis()
+		);
 	}
 }
