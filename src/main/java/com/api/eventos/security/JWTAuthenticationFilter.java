@@ -58,6 +58,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = jwtUtil.generateToken(username);
 		response.addHeader("Authentication", "Bearer " + token);
 		response.addHeader("access-control-expose-headers", "Authentication");
+		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader("access-control-expose-headers", "Authorization");
 		Convidado convidado = (Convidado) repo.findByLogin(username);
 		convidado.setSenha(null);
 		Gson gson = new Gson();

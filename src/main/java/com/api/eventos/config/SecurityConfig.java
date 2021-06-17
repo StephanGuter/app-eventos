@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ConvidadoRepository convidadoRepository;	
 
-	private static final String[] PUBLIC_MATCHERS = { "/evento/**", "/convidado/**" };
+	private static final String[] PUBLIC_MATCHERS = { "/evento/**", "/convidado/**", "/auth/refresh_token" };
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -49,8 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS).permitAll()
 			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS).permitAll()
 			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS).permitAll()
-			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
-			.permitAll()
+			.antMatchers(HttpMethod.OPTIONS, PUBLIC_MATCHERS).permitAll()
+			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/auth/refresh_token").permitAll()
 			.anyRequest()
 			.authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, convidadoRepository));
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
         configuration.setAllowedOrigins(Arrays.asList("https://app-eventos-client.stackblitz.io", "http://localhost:8090"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Access-Control-Allow-Origin"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Authentication", "Content-Type", "Access-Control-Allow-Origin"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

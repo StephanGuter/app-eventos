@@ -88,7 +88,6 @@ public class ConvidadoController implements ControllerInterface<Convidado> {
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Grava um convidado")
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<Convidado> post(@Valid @RequestBody Convidado obj) {
 		service.create(obj);

@@ -25,7 +25,7 @@ public class AuthController {
 		UserDetailsImpl user = ConvidadoService.authenticated();
 		if (user != null) {
 			String token = jwtUtil.generateToken(user.getUsername());
-			response.addHeader("Authorization", "Bearer " + token);
+			response.addHeader("Authentication", "Bearer " + token);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

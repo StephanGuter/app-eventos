@@ -103,7 +103,6 @@ public class EventoController implements ControllerInterface<Evento>{
 			description = "Foi gerada uma exceção"),
 			})
 	@Operation(summary = "Atualiza um evento, dado seu id")
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Evento> put(@Valid @RequestBody Evento obj) {
 		if (service.update(obj)) {
